@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import PageHeader from "../components/PageHeader";
 import { useParams } from "react-router-dom";
 import { FaBriefcase } from "react-icons/fa6";
+import { FiBookmark, FiCheck } from "react-icons/fi";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import { useJobShortlist } from "../hooks/useJobShortlist";
 
 const JobDetails = () => {
   const { id } = useParams();
   const [job, setJob] = useState([]);
+  const { isShortlisted, toggleShortlist } = useJobShortlist();
+  const isShortlistedJob = isShortlisted(job);
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/all-jobs/${id}`)
       .then((res) => res.json())
@@ -72,6 +76,21 @@ const JobDetails = () => {
           >
             立即申请
           </button>
+          {job?._id && (
+            <button
+              type="button"
+              onClick={() => toggleShortlist(job)}
+              aria-label={isShortlistedJob ? "移出短名单" : "加入短名单"}
+              className={`ms-2 inline-flex items-center gap-2 rounded-sm px-6 py-1 ${
+                isShortlistedJob
+                  ? "bg-blue text-white"
+                  : "border border-gray-300 text-primary hover:border-blue hover:text-blue"
+              }`}
+            >
+              {isShortlistedJob ? <FiCheck /> : <FiBookmark />}
+              {isShortlistedJob ? "移出短名单" : "加入短名单"}
+            </button>
+          )}
         </div>
 
         <div className="flex flex-col md:flex-row justify-between gap-12 mt-12">
