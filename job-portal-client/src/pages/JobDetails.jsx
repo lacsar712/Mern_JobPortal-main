@@ -2,12 +2,17 @@ import React, { useEffect, useState } from "react";
 import PageHeader from "../components/PageHeader";
 import { useParams } from "react-router-dom";
 import { FaBriefcase } from "react-icons/fa6";
+import { FiStar } from "react-icons/fi";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import useJobShortlist from "../hooks/useJobShortlist";
 
 const JobDetails = () => {
   const { id } = useParams();
   const [job, setJob] = useState([]);
+  const { isShortlisted, toggleItem } = useJobShortlist();
+  const active = job && job._id ? isShortlisted(job._id) : false;
+
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/all-jobs/${id}`)
       .then((res) => res.json())
@@ -71,6 +76,19 @@ const JobDetails = () => {
             onClick={handleJobApply}
           >
             立即申请
+          </button>
+          <button
+            type="button"
+            onClick={() => toggleItem(job)}
+            aria-label={active ? "移出短名单" : "加入短名单"}
+            className={`ms-2 inline-flex items-center gap-2 px-6 py-1 rounded-sm border ${
+              active
+                ? "bg-blue text-white border-blue"
+                : "bg-white text-blue border-blue hover:bg-blue/10"
+            }`}
+          >
+            <FiStar className={active ? "fill-current" : ""} />
+            {active ? "移出短名单" : "加入短名单"}
           </button>
         </div>
 
