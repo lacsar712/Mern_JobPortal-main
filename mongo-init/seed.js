@@ -1,0 +1,95 @@
+// Seed sample jobs on first MongoDB startup (docker-entrypoint-initdb.d)
+db = db.getSiblingDB('mernJobPortal');
+
+db.demoJobs.insertMany([
+  {
+    companyName: 'Linear',
+    jobTitle: '软件工程师',
+    companyLogo: 'https://ui-avatars.com/api/?name=Linear&background=5E6AD2&color=fff',
+    minPrice: '20',
+    maxPrice: '30',
+    salaryType: 'Yearly',
+    jobLocation: 'Brussels',
+    postingDate: '2023-11-03',
+    experienceLevel: 'Any experience',
+    employmentType: 'Full-time',
+    description: '参与现代化开发工具的产品研发，与分布式产品团队紧密协作，持续打磨工程体验。',
+    postedBy: 'demo@jobportal.local',
+    createdAt: new Date()
+  },
+  {
+    companyName: 'Notion',
+    jobTitle: 'Web 开发工程师',
+    companyLogo: 'https://ui-avatars.com/api/?name=Notion&background=000000&color=fff',
+    minPrice: '40',
+    maxPrice: '50',
+    salaryType: 'Yearly',
+    jobLocation: 'San Francisco',
+    postingDate: '2023-11-02',
+    experienceLevel: 'Internship',
+    employmentType: 'Temporary',
+    description: '为全球海量 Notion 用户打造流畅的 Web 体验，参与核心功能迭代与性能优化。',
+    postedBy: 'demo@jobportal.local',
+    createdAt: new Date()
+  },
+  {
+    companyName: 'Spline',
+    jobTitle: '数据科学家',
+    companyLogo: 'https://ui-avatars.com/api/?name=Spline&background=0EA5E9&color=fff',
+    minPrice: '40',
+    maxPrice: '50',
+    salaryType: 'Yearly',
+    jobLocation: 'Seattle',
+    postingDate: '2023-10-28',
+    experienceLevel: 'Any experience',
+    employmentType: 'Full-time',
+    description: '将产品数据转化为可执行洞察，助力三维设计平台的增长与决策。',
+    postedBy: 'demo@jobportal.local',
+    createdAt: new Date()
+  },
+  {
+    companyName: 'Raycast',
+    jobTitle: 'UI/UX 设计师',
+    companyLogo: 'https://ui-avatars.com/api/?name=Raycast&background=FF6363&color=fff',
+    minPrice: '40',
+    maxPrice: '50',
+    salaryType: 'Monthly',
+    jobLocation: 'London',
+    postingDate: '2023-10-05',
+    experienceLevel: 'Work remotely',
+    employmentType: 'Part-time',
+    description: '设计面向创作者与工程师的高效率生产力界面，提升日常工作体验。',
+    postedBy: 'demo@jobportal.local',
+    createdAt: new Date()
+  },
+  {
+    companyName: 'Loom',
+    jobTitle: '前端开发工程师',
+    companyLogo: 'https://ui-avatars.com/api/?name=Loom&background=625DF5&color=fff',
+    minPrice: '50',
+    maxPrice: '75',
+    salaryType: 'Yearly',
+    jobLocation: 'London',
+    postingDate: '2023-10-28',
+    experienceLevel: 'Internship',
+    employmentType: 'Full-time',
+    description: '基于 React 构建高性能前端界面，服务异步视频协作产品。',
+    postedBy: 'demo@jobportal.local',
+    createdAt: new Date()
+  },
+  {
+    companyName: 'Trainline',
+    jobTitle: '运维工程师',
+    companyLogo: 'https://ui-avatars.com/api/?name=Trainline&background=48D597&color=fff',
+    minPrice: '80',
+    maxPrice: '120',
+    salaryType: 'Yearly',
+    jobLocation: 'Boston',
+    postingDate: '2023-10-05',
+    experienceLevel: 'Internship',
+    employmentType: 'Temporary',
+    description: '负责高流量出行平台的 CI/CD 与云基础设施，保障系统稳定可靠。',
+    postedBy: 'demo@jobportal.local',
+    createdAt: new Date()
+  }
+]);
