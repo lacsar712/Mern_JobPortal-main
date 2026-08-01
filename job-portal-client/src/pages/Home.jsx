@@ -4,7 +4,12 @@ import Sidebar from "../Sidebar/Sidebar";
 import Jobs from "./Jobs";
 import Card from "../components/Card";
 import Newsletter from "../components/Newsletter";
+import ShortlistPanel from "../components/ShortlistPanel";
+import CompareView from "../components/CompareView";
 import toast from "react-hot-toast";
+import { FiBookmark } from "react-icons/fi";
+import { useJobShortlist } from "../hooks/useJobShortlist";
+import { useShortlistUrlSync } from "../hooks/useShortlistUrlSync";
 
 const Home = () => {
   const [jobs, setJobs] = useState([]);
@@ -18,6 +23,20 @@ const Home = () => {
   // Pagination State
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
+
+  // 短名单 / 对比视图状态（URL 驱动，详见 useShortlistUrlSync）
+  const { count } = useJobShortlist();
+  const {
+    panelOpen,
+    compareItems,
+    selectedIds,
+    setSelectedIds,
+    openPanel,
+    closePanel,
+    enterCompare,
+    exitCompare,
+    removeFromCompare,
+  } = useShortlistUrlSync();
 
   useEffect(() => {
     setIsLoading(true);
@@ -149,6 +168,20 @@ const Home = () => {
           <Sidebar handleChange={handleChange} handleClick={handleClick} />
         </div>
         <div className="col-span-2 bg-white p-4 rounded">
+          {/* 短名单入口（含数量徽章） */}
+          <div className="flex justify-end mb-3">
+            <button
+              onClick={openPanel}
+              aria-label={`打开短名单，当前已加入 ${count} 个职位`}
+              className="relative flex items-center gap-2 border border-blue text-blue px-4 py-1.5 rounded-sm hover:bg-blue hover:text-white transition-colors"
+            >
+              <FiBookmark /> 短名单
+              <span className="ml-1 inline-flex items-center justify-center min-w-[1.5rem] h-6 px-1 text-xs font-semibold text-white bg-blue rounded-full">
+                {count}
+              </span>
+            </button>
+          </div>
+
           {isLoading ? (
             <p className="font-medium">加载中...</p>
           ) : result.length > 0 ? (
@@ -186,6 +219,20 @@ const Home = () => {
           <Newsletter />
         </div>
       </div>
+
+      {/* 短名单面板（抽屉） */}
+      <ShortlistPanel
+        open={panelOpen}
+        onClose={closePanel}
+        onCompare={enterCompare}
+        selectedIds={selectedIds}
+        onSelectedChange={setSelectedIds}
+      />
+
+      {/* 对比视图（叠加 UI 层，不影响职位列表数据源） */}
+      {compareItems && (
+        <CompareView items={compareItems} onBack={exitCompare} onRemove={removeFromCompare} />
+      )}
     </div>
   );
 };

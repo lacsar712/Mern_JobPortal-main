@@ -4,10 +4,12 @@ import { useParams } from "react-router-dom";
 import { FaBriefcase } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import { useJobShortlist } from "../hooks/useJobShortlist";
 
 const JobDetails = () => {
   const { id } = useParams();
   const [job, setJob] = useState([]);
+  const { isInShortlist, toggleJob } = useJobShortlist();
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/all-jobs/${id}`)
       .then((res) => res.json())
@@ -72,6 +74,19 @@ const JobDetails = () => {
           >
             立即申请
           </button>
+          {job._id && (
+            <button
+              className={`px-6 py-1 rounded-sm ms-2 border ${
+                isInShortlist(job._id)
+                  ? "bg-blue text-white border-blue"
+                  : "text-blue border-blue hover:bg-blue hover:text-white"
+              }`}
+              aria-label={isInShortlist(job._id) ? "移出短名单" : "加入短名单"}
+              onClick={() => toggleJob(job)}
+            >
+              {isInShortlist(job._id) ? "移出短名单" : "加入短名单"}
+            </button>
+          )}
         </div>
 
         <div className="flex flex-col md:flex-row justify-between gap-12 mt-12">
