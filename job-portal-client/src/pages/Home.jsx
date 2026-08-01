@@ -4,6 +4,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import Jobs from "./Jobs";
 import Card from "../components/Card";
 import Newsletter from "../components/Newsletter";
+import ShortlistPanel from "../components/ShortlistPanel";
 import toast from "react-hot-toast";
 
 const Home = () => {
@@ -149,6 +150,8 @@ const Home = () => {
           <Sidebar handleChange={handleChange} handleClick={handleClick} />
         </div>
         <div className="col-span-2 bg-white p-4 rounded">
+          {/* 短名单入口 + 面板（含对比视图），未登录即可使用 */}
+          <ShortlistPanel />
           {isLoading ? (
             <p className="font-medium">加载中...</p>
           ) : result.length > 0 ? (
